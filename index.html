@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WebRosa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="barra-aviso">
+    <p class="miolo">Protótipo acadêmico do Outubro Rosa. Não analisa imagens de exames e não substitui a avaliação médica.</p>
+  </div>
+
+  <header class="topo">
+    <div class="miolo topo-int">
+      <a class="marca" href="#inicio" aria-label="WebRosa, voltar ao início">
+        <svg class="fita" viewBox="0 0 40 44" width="26" height="29" aria-hidden="true" focusable="false">
+          <path d="M20 21C12 14 12 4 20 4s8 10 0 17Z"/><path d="M20 21 12 40M20 21l8 19"/>
+        </svg>
+        <span>Web<b>Rosa</b></span>
+      </a>
+      <nav class="menu" aria-label="Seções da página">
+        <a href="#como">Como funciona</a>
+        <a href="#base">Gráficos</a>
+        <a href="#risco">Faixas de risco</a>
+        <a href="#fila">Fila de revisão</a>
+      </nav>
+      <a class="botao botao-rosa topo-cta" href="#fila">Ver a fila</a>
+    </div>
+  </header>
+
+  <main id="inicio">
+    <p id="erro" class="erro miolo" hidden>Não foi possível carregar os dados. Confira se dados.js e app.js estão na mesma pasta do index.html.</p>
+
+    <section class="abertura">
+      <div class="miolo abertura-int">
+        <div>
+          <h1>A IA lê primeiro, o <em>médico decide</em> e a paciente recebe <em>depois</em></h1>
+          
+          <div class="acoes-hero">
+            <a class="botao botao-rosa" href="#fila">Ver a fila de revisão</a>
+            <a class="botao botao-contorno" href="#como">Entender o fluxo</a>
+            <button type="button" id="btn-base" class="botao botao-contorno" aria-expanded="false" aria-controls="fonte-dados">Sobre a base de dados</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="fonte-dados" class="secao" hidden>
+      <div class="miolo">
+        <h2 class="titulo">Sobre a base de dados</h2>
+        <p class="subtitulo">De onde vêm os casos, o que o modelo mede e o que ele não faz.</p>
+        <dl class="ficha">
+          <div><dt>Casos na base</dt><dd class="grande" id="base-total">–</dd></div>
+          <div><dt>Acerto nos casos de teste</dt><dd class="grande" id="base-acerto">–</dd></div>
+          <div><dt>Diagnóstico confirmado</dt><dd id="base-diag">–</dd></div>
+          <div><dt>Medidas por caso</dt><dd>30 medidas das células, como raio, textura e perímetro</dd></div>
+          <div class="largo"><dt>Fonte</dt><dd id="base-fonte">–</dd></div>
+        </dl>
+        <p class="aviso-base">Este protótipo <em>não analisa imagens</em> de mamografia ou ultrassom e <em>não substitui a avaliação médica</em>.</p>
+        <button type="button" id="btn-ocultar-base" class="btn btn-sec ocultar-base">Ocultar</button>
+      </div>
+    </section>
+
+    <section id="como" class="secao">
+      <div class="miolo">
+        <h2 class="titulo">Como funciona</h2>
+        <p class="subtitulo">O <em>médico</em> é a etapa central: os casos ficam <em>retidos até a revisão</em>.</p>
+        <ol class="fluxo">
+          <li><strong>A IA sugere</strong><span>Um modelo calcula a probabilidade de cada caso ser maligno e <em>ordena a fila</em>.</span></li>
+          <li><strong>O médico revisa</strong><span>Confirma ou descarta o caso e <em>escreve o parecer</em>.</span></li>
+          <li><strong>A paciente recebe</strong><span>Só <em>depois da revisão</em> o resultado é liberado.</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="base" class="secao secao-tom">
+      <div class="miolo">
+        <h2 class="titulo">Os dados em gráficos</h2>
+        <p class="subtitulo">Casos reais de nódulo de mama, cada um com o diagnóstico já confirmado e 30 medidas das células.</p>
+        <div class="duas-colunas">
+          <div class="painel">
+            <div class="caixa-grafico"><canvas id="g-pizza" role="img" aria-label="Gráfico de pizza: casos benignos e malignos"></canvas></div>
+            <p class="legenda-fig">A maior parte dos casos da base é benigna.</p>
+          </div>
+          <div class="painel">
+            <div class="caixa-grafico"><canvas id="g-barras" role="img" aria-label="Gráfico de barras: raio médio das células em casos benignos e malignos"></canvas></div>
+            <p class="legenda-fig">As células dos casos malignos são, em média, maiores.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="risco" class="secao">
+      <div class="miolo">
+        <h2 class="titulo">Quanto maior a célula, maior o risco</h2>
+        <p class="subtitulo">Cada ponto é uma faixa de raio médio. Use os filtros para ver o percentual de casos malignos ou o número de casos.</p>
+        <div class="painel">
+          <div class="filtros">
+            <label>Mostrar
+              <select id="f-metrica">
+                <option value="pct">% de casos malignos</option>
+                <option value="n">número de casos</option>
+              </select>
+            </label>
+            <label>A partir da faixa
+              <select id="f-faixa"></select>
+            </label>
+          </div>
+          <div class="caixa-grafico caixa-alta"><canvas id="g-linha" role="img" aria-label="Gráfico de linha: malignidade por faixa de raio médio"></canvas></div>
+          <p class="legenda-risco" aria-label="Legenda de cores dos pontos (quando o gráfico mostra % de casos malignos)">
+            <span><i class="chip chip-verde"></i>baixa (até 30%)</span>
+            <span><i class="chip chip-amarelo"></i>intermediária (30% a 70%)</span>
+            <span><i class="chip chip-vermelho"></i>alta (acima de 70%)</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="fila" class="secao secao-tom">
+      <div class="miolo">
+        <h2 class="titulo">Fila de revisão médica</h2>
+        <p class="subtitulo">Cadastre, revise, edite e exclua casos. O resultado só é liberado à paciente depois da revisão.</p>
+
+        <p id="aviso-config" class="erro" hidden>Back4App ainda não configurado. Preencha APP_ID e REST_KEY no arquivo config.js.</p>
+        <p id="msg" class="msg" role="status" hidden></p>
+
+        <div id="area-fila">
+          <form id="form-caso" class="form-caso">
+            <h3 id="titulo-form">Cadastrar novo caso</h3>
+            <label>Código do caso <input id="c-codigo" type="text" required placeholder="C-0041"></label>
+            <label>Probabilidade da IA (0 a 1) <input id="c-prob" type="number" min="0" max="1" step="0.001" required></label>
+            <label>Raio médio das células <input id="c-raio" type="number" min="0" step="0.01" required></label>
+            <label>Estado (API do IBGE) <select id="c-uf"><option value="">Carregando...</option></select></label>
+            <label>Município (API do IBGE) <select id="c-municipio" disabled><option value="">Selecione</option></select></label>
+            <label>Status da revisão
+              <select id="c-status">
+                <option value="aguardando">aguardando</option>
+                <option value="confirmado">confirmado</option>
+                <option value="descartado">descartado</option>
+              </select>
+            </label>
+            <label class="campo-largo">Parecer do médico <textarea id="c-parecer" rows="2"></textarea></label>
+            <div class="campo-largo botoes-form">
+              <button id="btn-salvar" type="submit" class="btn">Cadastrar caso</button>
+              <button id="btn-cancelar" type="button" class="btn btn-sec" hidden>Cancelar edição</button>
+              <button id="btn-importar" type="button" class="btn btn-sec">Importar casos de exemplo</button>
+            </div>
+          </form>
+
+          <div class="painel painel-tabela">
+            <div class="filtros">
+              <label>Buscar por código <input id="q-busca" type="search" placeholder="C-00"></label>
+              <label>Status
+                <select id="q-status">
+                  <option value="">Todos</option>
+                  <option value="aguardando">aguardando</option>
+                  <option value="confirmado">confirmado</option>
+                  <option value="descartado">descartado</option>
+                </select>
+              </label>
+              <label>Ordenar por
+                <select id="q-ordem">
+                  <option value="prob">maior probabilidade da IA</option>
+                  <option value="codigo">código</option>
+                </select>
+              </label>
+            </div>
+
+            <p class="legenda-risco legenda-tabela" aria-label="Legenda de cores da probabilidade da IA">
+              <span>Probabilidade da IA:</span>
+              <span><i class="chip chip-verde"></i>baixa (até 30%)</span>
+              <span><i class="chip chip-amarelo"></i>intermediária (30% a 70%)</span>
+              <span><i class="chip chip-vermelho"></i>alta (acima de 70%)</span>
+            </p>
+
+            <div class="tabela-rolagem">
+              <table class="tabela">
+                <thead>
+                  <tr><th>Código</th><th>Prob. IA</th><th>Raio médio</th><th>Município / UF</th><th>Status</th><th>Resultado à paciente</th><th>Parecer</th><th>Ações</th></tr>
+                </thead>
+                <tbody id="corpo-fila"></tbody>
+              </table>
+            </div>
+            <div id="rodape-tabela" class="rodape-tabela" hidden>
+              <p id="contagem-fila" role="status"></p>
+              <button id="btn-mais" type="button" class="btn btn-sec">Ver mais</button>
+            </div>
+            <p id="fila-vazia" class="vazio" hidden>Nenhum caso encontrado. Cadastre um ou importe os casos de exemplo.</p>
+
+            <div class="caixa-grafico caixa-status"><canvas id="g-status" role="img" aria-label="Gráfico de barras: casos da fila por status de revisão"></canvas></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="miolo rodape-int">
+      <div>
+        <p class="rodape-marca">WebRosa</p>
+        <p>Protótipo acadêmico de triagem com revisão médica, feito para o Outubro Rosa, mês de conscientização sobre o câncer de mama.</p>
+        <p class="voltar"><a href="#inicio">Voltar ao topo</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="dados.js"></script>
+  <script src="app.js"></script>
+  <script src="config.js"></script>
+  <script src="casos_seed.js"></script>
+  <script src="crud.js"></script>
+</body>
+</html>
