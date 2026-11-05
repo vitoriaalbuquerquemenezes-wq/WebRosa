@@ -1,0 +1,68 @@
+{
+  "fonte": "Breast Cancer Wisconsin (Diagnostic) - UCI / Kaggle",
+  "total_casos": 569,
+  "modelo": {
+    "tipo": "Regressão logística feita em JavaScript (dados tabulares, não analisa imagens)",
+    "acuracia_teste": 95.9
+  },
+  "pizza": {
+    "rotulos": [
+      "Benigno",
+      "Maligno"
+    ],
+    "valores": [
+      357,
+      212
+    ]
+  },
+  "barras": {
+    "rotulos": [
+      "Benigno",
+      "Maligno"
+    ],
+    "valores": [
+      12.15,
+      17.46
+    ],
+    "unidade": "raio médio das células (unidades do dataset)"
+  },
+  "linha": {
+    "rotulos": [
+      "< 10",
+      "10–12",
+      "12–14",
+      "14–16",
+      "16–18",
+      "18–20",
+      "≥ 20"
+    ],
+    "valores": [
+      0,
+      4.9,
+      15.5,
+      49.5,
+      87.8,
+      100,
+      100
+    ],
+    "contagem": [
+      47,
+      122,
+      168,
+      91,
+      49,
+      47,
+      45
+    ],
+    "unidade": "% de casos malignos"
+  },
+  "faixas": [
+    "< 10",
+    "10–12",
+    "12–14",
+    "14–16",
+    "16–18",
+    "18–20",
+    "≥ 20"
+  ]
+}
