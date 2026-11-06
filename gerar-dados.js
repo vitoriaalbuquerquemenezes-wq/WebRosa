@@ -182,3 +182,4 @@ console.log(`Medidas usadas pelo modelo: ${nomes.length}`);
 console.log(`Treino: ${treino.length} casos | Teste: ${teste.length} casos`);
 console.log(`Acurácia no conjunto de teste: ${(acuracia * 100).toFixed(1)}%`);
 console.log("Arquivos gerados: dados.js, dados.json, casos_seed.js, casos_seed.json");
+ 

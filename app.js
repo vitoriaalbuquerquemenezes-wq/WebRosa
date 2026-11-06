@@ -1,11 +1,9 @@
-// Cores: uma por diagnóstico, as mesmas em todos os gráficos
-// Verde = benigno, vermelho = maligno, amarelo = atenção, azul = informação
 const COR_BENIGNO = "#2e8b57";
 const COR_MALIGNO = "#c0392b";
 const COR_ATENCAO = "#d99a00";
 const COR_INFO = "#1f5fa6";
 
-// Faixas de risco (em %): abaixo de 30 verde, de 30 a 70 amarelo, acima de 70 vermelho
+
 const LIMITE_MEDIO = 30;
 const LIMITE_ALTO = 70;
 
@@ -15,7 +13,7 @@ function corRisco(percentual) {
   return COR_BENIGNO;
 }
 
-// Aparência padrão dos gráficos: sóbria, sem arredondamentos
+
 Chart.defaults.font.family = '"Public Sans", system-ui, sans-serif';
 Chart.defaults.font.size = 13;
 Chart.defaults.color = "#4b5563";
@@ -34,7 +32,7 @@ let graficoLinha = null;
 
 async function iniciar() {
   if (window.DADOS) {
-    // dados.js carregado pelo index.html: funciona até com duplo clique no arquivo
+    
     dados = window.DADOS;
   } else {
     try {
@@ -56,7 +54,7 @@ async function iniciar() {
 }
 
 function preencherIndicadores() {
-  // Seção "Sobre a base de dados", no fim da página
+  
   const acerto = dados.modelo.acuracia_teste.toString().replace(".", ",") + "%";
   document.getElementById("base-fonte").textContent = dados.fonte;
   document.getElementById("base-total").textContent = dados.total_casos;
@@ -66,7 +64,7 @@ function preencherIndicadores() {
     .join(" e ");
 }
 
-// Gráfico 1: pizza (benignos x malignos)
+
 function desenharPizza() {
   new Chart(document.getElementById("g-pizza"), {
     type: "pie",
@@ -99,7 +97,7 @@ function desenharPizza() {
   });
 }
 
-// Gráfico 2: barras (raio médio por diagnóstico)
+
 function desenharBarras() {
   new Chart(document.getElementById("g-barras"), {
     type: "bar",
@@ -131,7 +129,6 @@ function desenharBarras() {
   });
 }
 
-// Filtros do gráfico de linha (interatividade)
 function montarFiltros() {
   const selectFaixa = document.getElementById("f-faixa");
   dados.linha.rotulos.forEach((rotulo, i) => {
@@ -145,7 +142,7 @@ function montarFiltros() {
   document.getElementById("f-metrica").addEventListener("change", desenharLinha);
 }
 
-// Gráfico 3: linha (malignidade por faixa de raio), reage aos dois filtros
+
 function desenharLinha() {
   const inicio = Number(document.getElementById("f-faixa").value) || 0;
   const metrica = document.getElementById("f-metrica").value;
@@ -166,7 +163,7 @@ function desenharLinha() {
       datasets: [{
         label: textoY,
         data: valores,
-        // linha neutra; cada ponto leva a cor da faixa de risco (só no modo %)
+       
         borderColor: metrica === "pct" ? "#9ca3af" : COR_INFO,
         backgroundColor: metrica === "pct" ? valores.map(corRisco) : COR_INFO,
         pointBackgroundColor: metrica === "pct" ? valores.map(corRisco) : COR_INFO,
@@ -200,8 +197,7 @@ function desenharLinha() {
   });
 }
 
-// Colore a tabela da fila (gerada pelo crud.js) sem depender dele:
-// probabilidade da IA por faixa de risco e resultado à paciente por significado
+
 function colorirTabela() {
   document.querySelectorAll("#corpo-fila tr").forEach((tr) => {
     const c = tr.cells;
@@ -221,7 +217,7 @@ function colorirTabela() {
   });
 }
 
-// Menu do topo: destaca a seção que está na tela (a página é uma só, com rolagem)
+
 function destacarSecaoAtual() {
   const links = Array.from(document.querySelectorAll(".menu a"));
   if (!links.length || !("IntersectionObserver" in window)) return;
@@ -244,7 +240,7 @@ function destacarSecaoAtual() {
 
 destacarSecaoAtual();
 
-// "Sobre a base de dados" fica escondida até a pessoa pedir
+
 const btnBase = document.getElementById("btn-base");
 const secaoBase = document.getElementById("fonte-dados");
 function mostrarBase(abrir) {

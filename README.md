@@ -32,3 +32,4 @@ Preencha APP_ID e REST_KEY no config.js com as chaves do app criado só para est
 
 Breast Cancer Wisconsin (Diagnostic), UCI Machine Learning Repository (licença CC BY 4.0).
 O modelo usa medidas de células e não analisa imagens de mamografia ou ultrassom.
+ 
