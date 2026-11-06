@@ -1,21 +1,11 @@
-/*
-  Gera os dados do dashboard WebRosa só com Node (sem bibliotecas).
 
-  Entrada : breast-cancer-wisconsin.csv  (dataset público Breast Cancer Wisconsin - Diagnostic)
-  Saídas  : dados.js, dados.json, casos_seed.js, casos_seed.json
-
-  Como rodar:  node gerar-dados.js
-
-  Atenção: o modelo usa medidas de células (dados tabulares).
-  Ele NÃO analisa imagens de mamografia ou ultrassom. É um protótipo acadêmico.
-*/
 const fs = require("fs");
 const path = require("path");
 
 const PASTA = __dirname;
 const ARQUIVO_CSV = path.join(PASTA, "breast-cancer-wisconsin.csv");
 
-// ---------- 1) Ler o CSV ----------
+
 function lerCSV(caminho) {
   const linhas = fs.readFileSync(caminho, "utf8").replace(/^\uFEFF/, "").split(/\r?\n/).filter(Boolean);
   const cabecalho = linhas[0].split(",").map((c) => c.trim());
@@ -24,7 +14,7 @@ function lerCSV(caminho) {
   const iDiag = cabecalho.indexOf("diagnosis");
   if (iDiag < 0) throw new Error("O CSV precisa ter a coluna 'diagnosis' (M ou B).");
 
-  // Colunas de medidas = todas as numéricas, exceto id e diagnosis
+  
   const colunas = cabecalho
     .map((nome, i) => ({ nome, i }))
     .filter(({ nome, i }) => i !== iDiag && nome !== "id" && nome !== "" &&
@@ -37,7 +27,6 @@ function lerCSV(caminho) {
   };
 }
 
-// ---------- 2) Utilidades: sorteio com semente (resultado reproduzível) ----------
 function criarSorteio(semente) {
   let s = semente >>> 0;
   return function () {
@@ -58,7 +47,7 @@ function embaralhar(lista, sorteio) {
   return a;
 }
 
-// Separa treino e teste mantendo a proporção de benignos e malignos nos dois grupos
+
 function separarTreinoTeste(y, proporcaoTeste, sorteio) {
   const treino = [];
   const teste = [];
@@ -71,8 +60,7 @@ function separarTreinoTeste(y, proporcaoTeste, sorteio) {
   return { treino, teste };
 }
 
-// ---------- 3) Pré-processamento: padronização (a mesma ideia do StandardScaler) ----------
-// novo valor = (valor - média) / desvio padrão, calculados SÓ com os dados de treino
+
 function ajustarPadronizacao(X) {
   const d = X[0].length;
   const media = new Array(d).fill(0);
@@ -84,12 +72,12 @@ function ajustarPadronizacao(X) {
 
 const padronizar = (X, p) => X.map((linha) => linha.map((v, j) => (v - p.media[j]) / p.desvio[j]));
 
-// ---------- 4) Regressão logística (descida do gradiente) ----------
+
 const sigmoide = (z) => 1 / (1 + Math.exp(-Math.max(-30, Math.min(30, z))));
 
 function treinar(X, y, { taxa = 0.1, iteracoes = 3000 } = {}) {
   const n = X.length;
-  const lambda = 1 / n; // regularização L2 (mesmo efeito do padrão C=1 de bibliotecas conhecidas)
+  const lambda = 1 / n; 
   const d = X[0].length;
   const w = new Array(d).fill(0);
   let b = 0;
@@ -126,7 +114,7 @@ const probTeste = Xteste.map((linha) => probabilidade(modelo, linha));
 const acertos = probTeste.filter((p, k) => (p >= 0.5 ? 1 : 0) === maligno[teste[k]]).length;
 const acuracia = acertos / teste.length;
 
-// ---------- 6) Agregações para os gráficos ----------
+
 const iRaio = nomes.indexOf("radius_mean");
 if (iRaio < 0) throw new Error("O CSV precisa ter a coluna 'radius_mean'.");
 
@@ -140,7 +128,7 @@ const mediaRaio = (alvo) => {
   return lista.reduce((a, b) => a + b, 0) / lista.length;
 };
 
-// Faixas de raio médio: [inicio, fim)
+
 const limites = [0, 10, 12, 14, 16, 18, 20, Infinity];
 const nomesFaixas = ["< 10", "10–12", "12–14", "14–16", "16–18", "18–20", "≥ 20"];
 const faixas = nomesFaixas.map((nome, k) => {
@@ -170,7 +158,7 @@ const dados = {
   faixas: nomesFaixas
 };
 
-// ---------- 7) Casos de exemplo da fila (40 casos do conjunto de TESTE) ----------
+
 const sorteados = embaralhar(teste.map((_, k) => k), criarSorteio(7)).slice(0, 40);
 const casos = sorteados.map((k, n) => ({
   codigo: `C-${String(n + 1).padStart(4, "0")}`,
@@ -180,7 +168,7 @@ const casos = sorteados.map((k, n) => ({
   parecerMedico: ""
 }));
 
-// ---------- 8) Salvar ----------
+
 const salvar = (nome, texto) => fs.writeFileSync(path.join(PASTA, nome), texto, "utf8");
 const json = (obj) => JSON.stringify(obj, null, 2);
 

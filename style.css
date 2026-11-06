@@ -1,4 +1,4 @@
-/* WebRosa: visual de clínica, claro e sem enfeites. Um rosa só, um raio de canto só. */
+
 :root {
   --fundo: #ffffff;
   --tom: #ffffff;
@@ -11,7 +11,7 @@
   --rosa: #b3174d;
   --rosa-escuro: #85103a;
 
-  /* Cores com significado (não são a cor da marca) */
+  
   --verde: #1d6b3f;
   --amarelo: #8a5a00;
   --vermelho: #b42318;
@@ -35,7 +35,6 @@ body {
   line-height: 1.6;
   font-variant-numeric: tabular-nums;
 }
-/* Laço de conscientização no fundo de toda a página */
 body::before {
   content: "";
   position: fixed;
@@ -50,7 +49,7 @@ h1, h2, h3 { font-family: var(--fonte); margin: 0; color: var(--tinta); }
 
 .miolo { max-width: 1080px; margin-inline: auto; padding-inline: 1.5rem; }
 
-/* ---------- Aviso e topo ---------- */
+
 .barra-aviso { background: transparent; color: var(--tinta-suave); font-size: .9rem; }
 .barra-aviso p { margin: 0; padding-block: .5rem; }
 
@@ -90,7 +89,7 @@ h1, h2, h3 { font-family: var(--fonte); margin: 0; color: var(--tinta); }
 .botao-contorno:hover { background: #e6dfe2; }
 .topo-cta { padding: .5rem 1.1rem; }
 
-/* ---------- Abertura ---------- */
+
 .abertura { padding: 4.5rem 0 4rem; }
 .abertura-int { text-align: center; }
 .abertura h1 { font-size: clamp(2rem, 4vw, 2.9rem); font-weight: 700; line-height: 1.15; letter-spacing: -.01em; max-width: 22ch; margin-inline: auto; }
@@ -101,7 +100,7 @@ em { font-style: normal; color: var(--rosa); font-weight: 600; }
 
 .erro { margin-top: 1rem; background: var(--vermelho-fundo); color: #6e1a14; padding: .7rem 1rem; border-radius: var(--canto); }
 
-/* ---------- Seções ---------- */
+
 .secao { padding: 4rem 0; }
 .titulo { font-size: clamp(1.5rem, 2.6vw, 1.9rem); font-weight: 700; line-height: 1.25; }
 .subtitulo { max-width: 62ch; margin: .75rem 0 2rem; color: var(--tinta-suave); }
@@ -119,7 +118,7 @@ em { font-style: normal; color: var(--rosa); font-weight: 600; }
 .caixa-status { margin-top: 2.5rem; height: 260px; }
 .legenda-fig { margin: .9rem 0 0; font-size: .92rem; color: var(--tinta-suave); }
 
-/* Ficha da base de dados */
+
 .ficha { margin: 0; max-width: 52rem; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem 2.5rem; }
 .ficha dt { color: var(--tinta-suave); font-size: .92rem; }
 .ficha dd { margin: .2rem 0 0; font-weight: 600; }
@@ -127,7 +126,7 @@ em { font-style: normal; color: var(--rosa); font-weight: 600; }
 .ficha .largo { grid-column: span 2; }
 .aviso-base { max-width: 52ch; margin: 2.5rem 0 0; font-size: 1.1rem; }
 
-/* ---------- Campos ---------- */
+
 .filtros { display: flex; flex-wrap: wrap; gap: .9rem 1.5rem; margin-bottom: 1.25rem; }
 .filtros label, .form-caso label { display: grid; gap: .3rem; font-size: .9rem; font-weight: 600; color: var(--tinta); }
 select, input, textarea {
@@ -146,7 +145,7 @@ select:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px
 select:disabled { background: #f3eff1; color: #9a9296; }
 .vazio { margin: 0; padding: 1rem 0; color: var(--tinta-suave); }
 
-/* ---------- Fila ---------- */
+
 .form-caso {
   display: grid;
   gap: 1rem 1.25rem;
@@ -183,7 +182,6 @@ select:disabled { background: #f3eff1; color: #9a9296; }
 .tabela th:first-child, .tabela td:first-child { padding-left: 0; }
 .tabela td:first-child { font-weight: 600; }
 
-/* Ações como texto, sem botão */
 .tabela td.acoes { white-space: nowrap; }
 .acoes .btn + .btn { margin-left: 1rem; }
 .acoes .btn {
@@ -199,7 +197,7 @@ select:disabled { background: #f3eff1; color: #9a9296; }
 .acoes .btn-perigo { color: var(--vermelho); }
 .acoes .btn-perigo:hover { color: #7a1a12; }
 
-/* Status como texto simples */
+
 .selo { font-weight: 600; }
 .st-aguardando { color: var(--amarelo); }
 .st-confirmado { color: var(--verde); }
@@ -218,11 +216,10 @@ select:disabled { background: #f3eff1; color: #9a9296; }
 .chip-amarelo { background: #d99a00; }
 .chip-vermelho { background: var(--vermelho); }
 
-/* Contagem e botão "Ver mais" abaixo da tabela */
+
 .rodape-tabela { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem 1.5rem; margin-top: 1.25rem; }
 .rodape-tabela p { margin: 0; color: var(--tinta-suave); }
 
-/* ---------- Rodapé ---------- */
 .rodape { border-top: 1px solid var(--linha); color: var(--tinta-suave); padding: 3rem 0; font-size: .95rem; }
 .rodape-int { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem 3rem; }
 .rodape p { margin: 0; max-width: 52ch; }
@@ -233,7 +230,6 @@ select:disabled { background: #f3eff1; color: #9a9296; }
 .voltar a { color: var(--rosa-escuro); font-weight: 600; text-underline-offset: 4px; }
 .voltar a:hover { color: var(--rosa); }
 
-/* ---------- Telas menores ---------- */
 @media (max-width: 700px) {
   .ficha { grid-template-columns: 1fr; }
   .ficha .largo { grid-column: auto; }

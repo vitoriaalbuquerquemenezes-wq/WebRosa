@@ -1,4 +1,4 @@
-// ---------- Configuração ----------
+
 const API = "https://parseapi.back4app.com/classes/Caso";
 const IBGE = "https://servicodados.ibge.gov.br/api/v1/localidades/estados";
 const COR_STATUS = { aguardando: "#b7791f", confirmado: "#0f6b6e", descartado: "#7a8a8f" };
@@ -9,7 +9,7 @@ const CABECALHOS = {
   "Content-Type": "application/json"
 };
 
-const POR_PAGINA = 12; // quantos casos aparecem por vez
+const POR_PAGINA = 12; 
 let visiveis = POR_PAGINA;
 let totalFiltrado = 0;
 let casos = [];
@@ -17,7 +17,7 @@ let editandoId = null;
 let graficoStatus = null;
 const $ = (id) => document.getElementById(id);
 
-// ---------- Chamadas à API REST (as 4 operações do CRUD) ----------
+
 async function chamar(url, opcoes = {}) {
   const r = await fetch(url, { headers: CABECALHOS, ...opcoes });
   if (!r.ok) {
@@ -27,12 +27,12 @@ async function chamar(url, opcoes = {}) {
   return r.json();
 }
 
-const listar = async () => (await chamar(API + "?limit=1000")).results; // READ
-const criar = (c) => chamar(API, { method: "POST", body: JSON.stringify(c) }); // CREATE
-const editar = (id, c) => chamar(`${API}/${id}`, { method: "PUT", body: JSON.stringify(c) }); // UPDATE
-const excluir = (id) => chamar(`${API}/${id}`, { method: "DELETE" }); // DELETE
+const listar = async () => (await chamar(API + "?limit=1000")).results; 
+const criar = (c) => chamar(API, { method: "POST", body: JSON.stringify(c) }); 
+const editar = (id, c) => chamar(`${API}/${id}`, { method: "PUT", body: JSON.stringify(c) }); 
+const excluir = (id) => chamar(`${API}/${id}`, { method: "DELETE" }); 
 
-// ---------- Mensagens ----------
+
 function mensagem(texto, erro = false) {
   const el = $("msg");
   el.textContent = texto;
@@ -40,7 +40,7 @@ function mensagem(texto, erro = false) {
   el.hidden = !texto;
 }
 
-// ---------- API pública: IBGE (estados e municípios) ----------
+
 async function carregarEstados() {
   const sel = $("c-uf");
   try {
@@ -69,7 +69,7 @@ async function carregarMunicipios(uf, selecionado = "") {
   }
 }
 
-// ---------- Tabela da fila ----------
+
 function celula(texto) {
   const td = document.createElement("td");
   td.textContent = texto;
@@ -99,7 +99,7 @@ function linha(c) {
   tdStatus.appendChild(selo);
   tr.appendChild(tdStatus);
 
-  // Regra do projeto: a paciente só recebe o resultado depois da revisão médica
+
   tr.appendChild(celula(c.status === "aguardando" ? "Retido até revisão" : "Liberado após revisão"));
   tr.appendChild(celula(c.parecerMedico || "–"));
 
@@ -131,7 +131,7 @@ function renderizar() {
   atualizarGraficoStatus();
 }
 
-// "Mostrando 10 de 40 casos" + botão Ver mais / Ver menos
+
 function atualizarContagem(total, mostrados) {
   $("rodape-tabela").hidden = total <= POR_PAGINA;
   $("contagem-fila").textContent = `Mostrando ${mostrados} de ${total} casos`;
@@ -146,7 +146,7 @@ function verMaisOuMenos() {
   if (todos) document.querySelector(".painel-tabela").scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-// ---------- Gráfico de status (liga o CRUD ao dashboard) ----------
+
 function atualizarGraficoStatus() {
   const nomes = ["aguardando", "confirmado", "descartado"];
   const valores = nomes.map((n) => casos.filter((c) => c.status === n).length);
@@ -177,7 +177,7 @@ function atualizarGraficoStatus() {
   });
 }
 
-// ---------- Ações ----------
+
 async function carregar() {
   try {
     casos = await listar();
@@ -273,7 +273,7 @@ async function importarExemplos() {
   }
 }
 
-// ---------- Início ----------
+
 function iniciarFila() {
   const configurado = CONFIG.APP_ID && !CONFIG.APP_ID.startsWith("COLE");
   if (!configurado) {

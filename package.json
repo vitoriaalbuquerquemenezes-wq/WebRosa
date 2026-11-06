@@ -1,0 +1,9 @@
+{
+  "name": "webrosa",
+  "version": "1.0.0",
+  "description": "Painel de triagem com revisão médica (protótipo acadêmico)",
+  "private": true,
+  "scripts": {
+    "dados": "node gerar-dados.js"
+  }
+}
